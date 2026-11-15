@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-15
+
 ### Added
 
 - What is on now, next and tonight on the followed TV channels, read from any
@@ -28,4 +30,5 @@ the notes of the version's GitHub Release.
   a restart does not download the guide again.
 - Every text in English, French, German and Spanish.
 
-[Unreleased]: https://github.com/guim31/gladys-xmltv/commits/main
+[Unreleased]: https://github.com/guim31/gladys-xmltv/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/guim31/gladys-xmltv/releases/tag/v1.0.0
