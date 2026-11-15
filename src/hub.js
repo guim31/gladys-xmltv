@@ -166,7 +166,9 @@ export class Hub {
   async stop() {
     this.stopTimers();
     this.useTimers = false;
-    // A download in progress is aborted: SIGTERM must not wait for it.
+    // A download in progress is aborted, a queued one skipped: SIGTERM must
+    // not wait for them.
+    this.generation += 1;
     this.abort?.abort();
     await this.refreshing?.catch(() => {});
     await this.store.flush();

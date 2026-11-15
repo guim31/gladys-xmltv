@@ -80,7 +80,14 @@ async function openHttp(source, { fetchImpl, validators, signal }) {
   // fetch refuses credentials in the URL: they become a Basic header.
   const url = new URL(source.url);
   if (url.username || url.password) {
-    const credentials = `${decodeURIComponent(url.username)}:${decodeURIComponent(url.password)}`;
+    const decode = (text) => {
+      try {
+        return decodeURIComponent(text);
+      } catch {
+        return text; // a raw `%` in a password
+      }
+    };
+    const credentials = `${decode(url.username)}:${decode(url.password)}`;
     headers.Authorization = `Basic ${Buffer.from(credentials).toString('base64')}`;
     url.username = '';
     url.password = '';
