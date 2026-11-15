@@ -19,7 +19,14 @@ import { createHash } from 'node:crypto';
 import { createLogger } from '@gladysassistant/integration-sdk';
 import { MAX_CHANNELS } from './config.js';
 import { FEATURE, buildDevice, buildStates, channelIds, channelView } from './devices.js';
-import { Guide, MAX_CHANNEL_LIST, fold, resolveChannels, tidyProgrammes } from './guide.js';
+import {
+  Guide,
+  MAX_CHANNEL_LIST,
+  fold,
+  inWindow,
+  resolveChannels,
+  tidyProgrammes,
+} from './guide.js';
 import { MESSAGES, TEXT, channelList, formatTime, langOf, testReport } from './i18n.js';
 import { createIssueLog } from './issues.js';
 import { XmltvError } from './xmltv/parser.js';
@@ -31,6 +38,7 @@ export const WIDGET_KEY = 'tv_guide';
 export const TRIGGER_KEY = 'keyword_programme';
 export const HEARTBEAT_MS = 6 * 60 * 60_000;
 const RETRY_MS = 30 * 60_000;
+const TRIGGER_CATCH_UP_MS = 5 * 60_000;
 const MINUTE_MS = 60_000;
 const CACHE_VERSION = 1;
 const MAX_LISTED_CHANNELS = 60;
@@ -76,35 +84,68 @@ export class Hub {
 
   // --- Lifecycle -------------------------------------------------------------
 
-  /** (Re)start with a configuration: cache, download if due, timers. */
+  /**
+   * (Re)start with a configuration: cache, download if due, timers. With a
+   * usable cache, the download runs in the background (the handlers are
+   * served at once); without one, it is awaited.
+   */
   async start(config) {
     this.stopTimers();
+    this.abort?.abort();
     this.generation += 1;
     this.config = config;
     this.lastTick = this.now();
     this.fired.clear();
+    // Nothing of the previous configuration survives: another source, another
+    // language or other channels mean another guide.
+    this.cache = null;
+    this.guide = null;
+    this.followed = [];
+    this.missing = [];
     if (!config.source) {
-      this.guide = null;
-      this.followed = [];
-      this.missing = [];
-      await this.gladys.publishDiscoveredDevices([]);
-      await this.setStatus(config.sourceTyped ? 'badSource' : 'noSource');
+      this.lastError = config.sourceTyped ? 'badSource' : 'noSource';
+      await this.safely('publish the devices', () => this.publishDevices());
+      await this.setStatus(this.lastError);
       return;
     }
     const cache = await this.loadCache(config);
     if (cache) {
       this.useGuide(cache);
     }
-    const due = !cache || cache.guide.fetchedAt + config.refreshHours * 3_600_000 <= this.now();
-    if (due) {
-      await this.refresh();
-    } else {
-      await this.publishDevices();
-      await this.setStatus(null);
-      await this.tick();
-      this.scheduleRefresh(cache.guide.fetchedAt + config.refreshHours * 3_600_000 - this.now());
-    }
+    const dueAt = cache ? cache.guide.fetchedAt + config.refreshHours * 3_600_000 : 0;
     this.scheduleTick();
+    if (cache && dueAt > this.now()) {
+      this.lastError = this.channelError();
+      await this.safely('publish the devices', () => this.publishDevices());
+      await this.setStatus(this.lastError);
+      await this.tick();
+      this.scheduleRefresh(dueAt - this.now());
+      return;
+    }
+    if (cache) {
+      this.lastError = this.channelError();
+      await this.safely('publish the devices', () => this.publishDevices());
+      await this.setStatus(this.lastError);
+      await this.tick();
+      this.refresh().catch((err) => logger.error('Guide refresh failed', err));
+      return;
+    }
+    await this.refresh();
+  }
+
+  /** 'noChannel' when channels are followed but none is in the guide. */
+  channelError() {
+    return this.followed.length === 0 && this.config.channels.length > 0 ? 'noChannel' : null;
+  }
+
+  /** Run a call to Gladys; a failure is logged, never thrown (timers keep running). */
+  async safely(what, fn) {
+    try {
+      await fn();
+      this.issues.ok(what, `Could ${what} again`);
+    } catch (err) {
+      this.issues.fail(what, `Cannot ${what}: ${err.message}`);
+    }
   }
 
   /** Gladys restarted: send again what it may have lost. */
@@ -125,6 +166,8 @@ export class Hub {
   async stop() {
     this.stopTimers();
     this.useTimers = false;
+    // A download in progress is aborted: SIGTERM must not wait for it.
+    this.abort?.abort();
     await this.refreshing?.catch(() => {});
     await this.store.flush();
   }
@@ -199,10 +242,11 @@ export class Hub {
     if (!this.refreshing || this.refreshingGeneration !== this.generation) {
       // A run for an older configuration finishes first (its result is dropped).
       const previous = this.refreshing ?? Promise.resolve();
-      this.refreshingGeneration = this.generation;
+      const generation = this.generation;
+      this.refreshingGeneration = generation;
       const run = previous
         .catch(() => {})
-        .then(() => this.runRefresh())
+        .then(() => (generation === this.generation ? this.runRefresh() : { stale: true }))
         .finally(() => {
           if (this.refreshing === run) {
             this.refreshing = null;
@@ -218,15 +262,19 @@ export class Hub {
     const generation = this.generation;
     const label = sourceLabel(config.source);
     const now = this.now();
+    const abort = new AbortController();
+    this.abort = abort;
     // Names may only resolve once the channel list is read: the guide lists
     // its channels first (XMLTV DTD), so they are resolved on the first
     // programme.
     const channels = [];
     let wanted = null;
     const programmes = {};
+    let result;
     try {
-      const result = await readGuide(config.source, {
+      result = await readGuide(config.source, {
         fetchImpl: this.fetchImpl,
+        signal: abort.signal,
         validators: this.cache?.guide.fetchedAt ? this.cache.validators : null,
         parser: {
           language: config.language,
@@ -243,49 +291,15 @@ export class Hub {
             return wanted.has(channelId);
           },
           onProgramme: (programme) => {
-            (programmes[programme.channel] ??= []).push(programme);
+            // Only the window kept: a guide of months stays small in memory.
+            if (inWindow(programme, now)) {
+              (programmes[programme.channel] ??= []).push(programme);
+            }
           },
         },
       });
-      if (generation !== this.generation) {
-        return { stale: true };
-      }
-      if (result.notModified) {
-        this.cache.guide.fetchedAt = now;
-        this.guide.fetchedAt = now;
-        await this.store.save(this.cache);
-        logger.debug(`Guide unchanged on ${label}`);
-        await this.afterRefresh();
-        return { unchanged: true };
-      }
-      // A followed channel listed after its programmes (outside the DTD)
-      // resolves here, without programmes.
-      const { found } = resolveChannels(config.channels, channels);
-      const kept = {};
-      for (const channel of found.slice(0, MAX_CHANNELS)) {
-        kept[channel.id] = tidyProgrammes(programmes[channel.id] ?? [], now);
-      }
-      const cache = {
-        version: CACHE_VERSION,
-        source: sourceKey(config.source),
-        language: config.language,
-        validators: result.validators,
-        guide: { channels, programmes: kept, fetchedAt: now },
-      };
-      const first = !this.guide;
-      this.useGuide(cache);
-      await this.store.save(cache);
-      const count = Object.values(kept).reduce((sum, list) => sum + list.length, 0);
-      const line = `Guide read on ${label}: ${result.stats.channels} channels, ${result.stats.programmes} programmes, ${count} kept for ${found.length} followed channels`;
-      if (first) {
-        logger.info(line);
-      } else {
-        logger.debug(line);
-      }
-      await this.afterRefresh();
-      return { unchanged: false };
     } catch (err) {
-      if (generation !== this.generation) {
+      if (generation !== this.generation || abort.signal.aborted) {
         return { stale: true };
       }
       const code = err instanceof XmltvError ? err.code : 'unreachable';
@@ -294,23 +308,59 @@ export class Hub {
       }
       this.issues.fail('guide', `Cannot read the guide on ${label}: ${err.message}`);
       // The programmes already known keep the devices alive meanwhile.
-      this.lastError = this.guide ? null : code;
-      await this.publishDevices();
+      this.lastError = this.guide ? this.channelError() : code;
+      await this.safely('publish the devices', () => this.publishDevices());
       await this.setStatus(this.lastError);
       this.scheduleRefresh(Math.min(RETRY_MS, config.refreshHours * 3_600_000));
       return { error: code };
     }
+    if (generation !== this.generation) {
+      return { stale: true };
+    }
+    this.issues.ok('guide', `Guide read again on ${label}`);
+    if (result.notModified) {
+      this.cache.guide.fetchedAt = now;
+      this.guide.fetchedAt = now;
+      await this.store.save(this.cache);
+      logger.debug(`Guide unchanged on ${label}`);
+      await this.afterRefresh();
+      return { unchanged: true };
+    }
+    // A followed channel listed after its programmes (outside the DTD)
+    // resolves here, without programmes.
+    const { found } = resolveChannels(config.channels, channels);
+    const kept = {};
+    for (const channel of found.slice(0, MAX_CHANNELS)) {
+      kept[channel.id] = tidyProgrammes(programmes[channel.id] ?? [], now);
+    }
+    const cache = {
+      version: CACHE_VERSION,
+      source: sourceKey(config.source),
+      language: config.language,
+      validators: result.validators,
+      guide: { channels, programmes: kept, fetchedAt: now },
+    };
+    const first = !this.guide;
+    this.useGuide(cache);
+    await this.store.save(cache);
+    const count = Object.values(kept).reduce((sum, list) => sum + list.length, 0);
+    const line = `Guide read on ${label}: ${result.stats.channels} channels, ${result.stats.programmes} programmes, ${count} kept for ${found.length} followed channels`;
+    if (first) {
+      logger.info(line);
+    } else {
+      logger.debug(line);
+    }
+    await this.afterRefresh();
+    return { unchanged: false };
   }
 
   async afterRefresh() {
-    this.issues.ok('guide', `Guide read again on ${sourceLabel(this.config.source)}`);
-    this.lastError =
-      this.followed.length === 0 && this.config.channels.length > 0 ? 'noChannel' : null;
-    await this.publishDevices();
+    this.scheduleRefresh(this.config.refreshHours * 3_600_000);
+    this.lastError = this.channelError();
+    await this.safely('publish the devices', () => this.publishDevices());
     await this.setStatus(this.lastError);
     await this.tick();
     this.gladys.requestWidgetRefresh(WIDGET_KEY);
-    this.scheduleRefresh(this.config.refreshHours * 3_600_000);
   }
 
   async setStatus(code) {
@@ -373,12 +423,9 @@ export class Hub {
       buildStates(this.gladys, channel.id, this.view(channel.id, now), now, this.config.language),
     );
     if (states.length > 0) {
-      try {
-        await this.gladys.publishChangedStates(states, { heartbeat: HEARTBEAT_MS });
-        this.issues.ok('states', 'States published again');
-      } catch (err) {
-        this.issues.fail('states', `Cannot publish the states: ${err.message}`);
-      }
+      await this.safely('publish the states', () =>
+        this.gladys.publishChangedStates(states, { heartbeat: HEARTBEAT_MS }),
+      );
     }
     await this.fireTriggers(now);
     this.lastTick = now;
@@ -386,17 +433,19 @@ export class Hub {
 
   /** The user added (or updated) a channel: send all its states again. */
   async onDeviceCreated(device) {
+    this.gladys.requestWidgetRefresh(WIDGET_KEY);
     const channel = this.channelByDevice(device.external_id);
     if (!channel || !this.guide) {
       return;
     }
     const now = this.now();
     this.gladys.forgetPublishedStates(device.external_id);
-    await this.gladys.publishChangedStates(
-      buildStates(this.gladys, channel.id, this.view(channel.id, now), now, this.config.language),
-      { heartbeat: HEARTBEAT_MS },
+    await this.safely('publish the states', () =>
+      this.gladys.publishChangedStates(
+        buildStates(this.gladys, channel.id, this.view(channel.id, now), now, this.config.language),
+        { heartbeat: HEARTBEAT_MS },
+      ),
     );
-    this.gladys.requestWidgetRefresh(WIDGET_KEY);
   }
 
   // --- Keyword trigger -------------------------------------------------------
@@ -411,7 +460,8 @@ export class Hub {
     if (keywords.length === 0 || this.lastTick === null || now <= this.lastTick) {
       return;
     }
-    const since = this.lastTick;
+    // After a stall (suspend, clock jump), only the last minutes count.
+    const since = Math.max(this.lastTick, now - TRIGGER_CATCH_UP_MS);
     const moments = [{ moment: 'start', offset: 0 }];
     if (advanceMinutes > 0) {
       moments.push({ moment: 'before', offset: advanceMinutes * MINUTE_MS });

@@ -15,7 +15,7 @@ const DEFAULT_LENGTH_MS = 60 * 60_000;
 const EVENING_EARLY_MS = 10 * 60_000;
 const EVENING_LATE_MS = 90 * 60_000;
 const EVENING_MIN_LENGTH_MS = 20 * 60_000;
-export const MAX_CHANNEL_LIST = 5000;
+export const MAX_CHANNEL_LIST = 20000;
 
 /** Lower case, no accent: "Koh-Lanta" and "koh lanta" stay different, "Été" = "ete". */
 export const fold = (text) =>
@@ -51,21 +51,25 @@ export function resolveChannels(entries, channels) {
   return { found, missing };
 }
 
-/** Sort, fill the missing ends, drop what is out of the window. */
+/** Whether a programme may matter: not over for an hour, starting within 8 days. */
+export const inWindow = (programme, now) =>
+  programme.start < now + KEEP_AHEAD_MS &&
+  (programme.stop === null || programme.stop > now - KEEP_PAST_MS);
+
+/** Sort, fill the missing ends, drop what is out of the window. Linear after the sort. */
 export function tidyProgrammes(list, now) {
   const sorted = [...list].sort((a, b) => a.start - b.start);
-  const tidy = [];
-  sorted.forEach((programme, index) => {
-    const next = sorted.slice(index + 1).find((item) => item.start > programme.start);
-    const stop = programme.stop ?? (next ? next.start : programme.start + DEFAULT_LENGTH_MS);
-    if (stop > now - KEEP_PAST_MS && programme.start < now + KEEP_AHEAD_MS) {
-      tidy.push({ ...programme, stop });
-    }
-  });
   // Same start twice (two sources merged): keep the first.
-  return tidy.filter(
-    (programme, index) => index === 0 || programme.start !== tidy[index - 1].start,
+  const unique = sorted.filter(
+    (programme, index) => index === 0 || programme.start !== sorted[index - 1].start,
   );
+  return unique
+    .map((programme, index) => {
+      const next = unique[index + 1];
+      const stop = programme.stop ?? (next ? next.start : programme.start + DEFAULT_LENGTH_MS);
+      return { ...programme, stop };
+    })
+    .filter((programme) => inWindow(programme, now));
 }
 
 /** Midnight-based local date (time zone of Gladys) at a number of minutes. */

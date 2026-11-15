@@ -86,6 +86,8 @@ export async function createWorld({
   if (connect) {
     await gladys.connect();
     await app.ready;
+    // With a cache, the download runs in the background: wait for it.
+    await app.hub.refreshing;
   }
   const world = {
     gladys,

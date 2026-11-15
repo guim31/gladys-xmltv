@@ -52,7 +52,11 @@ async function* gunzipIfNeeded(chunks) {
     try {
       yield* gunzip;
     } catch (err) {
-      throw new XmltvError('malformed', `Broken gzip data (${err.code ?? err.message})`);
+      // Only a zlib error means a damaged file; a network error stays one.
+      if (typeof err.code === 'string' && err.code.startsWith('Z_')) {
+        throw new XmltvError('malformed', `Broken gzip data (${err.code})`);
+      }
+      throw err;
     }
   } else {
     yield* rest;
@@ -73,6 +77,14 @@ function decoderFor(head) {
 
 async function openHttp(source, { fetchImpl, validators, signal }) {
   const headers = { 'User-Agent': USER_AGENT, Accept: 'application/xml, application/gzip, */*' };
+  // fetch refuses credentials in the URL: they become a Basic header.
+  const url = new URL(source.url);
+  if (url.username || url.password) {
+    const credentials = `${decodeURIComponent(url.username)}:${decodeURIComponent(url.password)}`;
+    headers.Authorization = `Basic ${Buffer.from(credentials).toString('base64')}`;
+    url.username = '';
+    url.password = '';
+  }
   if (validators?.etag) {
     headers['If-None-Match'] = validators.etag;
   }
@@ -81,7 +93,7 @@ async function openHttp(source, { fetchImpl, validators, signal }) {
   }
   let response;
   try {
-    response = await fetchImpl(source.url, { headers, signal, redirect: 'follow' });
+    response = await fetchImpl(url.href, { headers, signal, redirect: 'follow' });
   } catch (err) {
     if (err.name === 'TimeoutError' || err.name === 'AbortError') {
       throw new XmltvError('timeout', 'The guide server did not answer in time');
@@ -134,11 +146,13 @@ function openFile(source) {
  * @param {object} [options.validators] { etag, lastModified } of the last download
  * @param {Function} [options.fetchImpl]
  * @param {number} [options.timeoutMs]
+ * @param {AbortSignal} [options.signal] aborts the download (configuration changed, stop)
  * @returns {Promise<{ notModified: true } | { notModified: false, validators, stats, bytes }>}
  */
 export async function readGuide(source, options) {
   const { fetchImpl = globalThis.fetch, validators, timeoutMs = TIMEOUT_MS } = options;
-  const signal = AbortSignal.timeout(timeoutMs);
+  const timeout = AbortSignal.timeout(timeoutMs);
+  const signal = options.signal ? AbortSignal.any([timeout, options.signal]) : timeout;
   const opened =
     source.kind === 'file'
       ? await openFile(source)
@@ -151,6 +165,7 @@ export async function readGuide(source, options) {
   let bytes = 0;
   try {
     for await (const chunk of gunzipIfNeeded(opened.chunks)) {
+      signal.throwIfAborted();
       decoder ??= decoderFor(chunk);
       bytes += chunk.length;
       if (bytes > MAX_BYTES) {

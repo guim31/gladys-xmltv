@@ -105,7 +105,7 @@
         "de": "z. B. TF1.fr, France 2, Arte",
         "es": "p. ej. TF1.fr, France 2, Arte"
       },
-      "required": true,
+      "required": false,
       "default": ""
     },
     {

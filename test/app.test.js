@@ -162,7 +162,66 @@ test('changing the configuration re-reads the guide and the devices', async () =
     world.fake.discoveredDevices.map((d) => d.external_id),
     ['ext:test-integration:channel:BBC.One.Lon.HD.uk'],
   );
+  // A new address that fails: the old guide is not kept, the error shows.
+  await world.fake.configUpdated({ guide_url: 'https://guides.example.org/gone', channels: 'TF1' });
+  assert.equal(world.hub.guide, null);
+  assert.deepEqual(world.fake.discoveredDevices, []);
+  assert.deepEqual(world.fake.connectionStatus, { connected: false, message: MESSAGES.http });
+  // Cleared address, then Gladys restarts: still an error.
+  await world.fake.configUpdated({});
+  await world.gladys.disconnect();
+  await world.gladys.connect();
+  assert.deepEqual(world.fake.connectionStatus, { connected: false, message: MESSAGES.noSource });
   await world.close();
+});
+
+test('a language change downloads the guide again, without the old ETag', async () => {
+  const server = createFakeServer();
+  const world = await createWorld({ server });
+  await world.fake.configUpdated({ guide_url: FR_URL, channels: 'TF1.fr', language: 'de' });
+  assert.equal(server.requests.length, 2);
+  assert.equal(server.requests[1].headers['If-None-Match'], undefined);
+  assert.equal(world.store.data.language, 'de');
+  await world.close();
+});
+
+test('a failure to reach Gladys after a download keeps the timers armed', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const gladys = createFakeGladys({ config: { guide_url: FR_URL, channels: 'France 2' } });
+  const app = registerHandlers(gladys, {
+    store: new MemoryStore(),
+    now: () => SUNDAY_2050,
+    fetchImpl: createFakeServer().fetch,
+  });
+  t.mock.method(gladys, 'publishDiscoveredDevices', async () => {
+    throw new Error('Gladys unreachable');
+  });
+  await gladys.connect();
+  await app.ready;
+  assert.ok(app.hub.guide, 'the guide is read');
+  assert.ok(app.hub.tickTimer && app.hub.refreshTimer, 'timers armed');
+  await app.stop();
+});
+
+test('stop() aborts a download in progress', async () => {
+  let aborted = false;
+  const server = {
+    fetch: (url, init) =>
+      new Promise((resolve, reject) => {
+        init.signal.addEventListener('abort', () => {
+          aborted = true;
+          reject(init.signal.reason);
+        });
+      }),
+  };
+  const world = await createWorld({ server, connect: false });
+  // The first download is awaited by the connection: it never ends here.
+  const connecting = world.gladys.connect();
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  await world.close();
+  await connecting;
+  assert.ok(aborted);
+  assert.equal(world.fake.connectionStatus, null, 'an abort is not a guide error');
 });
 
 test('the keyword trigger fires at the start and before it, once, never for the past', async () => {

@@ -62,7 +62,8 @@ export function parseAttributes(tag) {
  */
 function children(body, name) {
   const found = [];
-  const pattern = new RegExp(`<${name}(\\s[^>]*)?(?:/>|>([\\s\\S]*?)</${name}>)`, 'g');
+  // Lazy attributes: a greedy `[^>]*` would eat the `/` of `<title lang="fr"/>`.
+  const pattern = new RegExp(`<${name}(\\s[^>]*?)?(?:/>|>([\\s\\S]*?)</${name}>)`, 'g');
   let match;
   while ((match = pattern.exec(body)) !== null) {
     const text = decodeText(match[2] ?? '');

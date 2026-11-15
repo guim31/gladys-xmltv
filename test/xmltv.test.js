@@ -90,6 +90,10 @@ test('the title in the preferred language, else the first one', () => {
   <programme start="20261115220000 +0100" channel="a"/>
   </tv>`;
   const { channels, programmes } = parseAll(xml, { language: 'fr' });
+  const empty = parseAll(
+    '<tv><programme start="20261115200000" channel="a"><title lang="fr"/><sub-title lang="fr"/><title>T</title><sub-title>S</sub-title></programme></tv>',
+  );
+  assert.deepEqual([empty.programmes[0].title, empty.programmes[0].subtitle], ['T', 'S']);
   assert.deepEqual(channels, [{ id: 'a', names: ['Das Erste', 'ARD'] }]);
   assert.deepEqual(
     programmes.map((p) => [p.title, p.subtitle, p.stop]),
@@ -172,6 +176,19 @@ test('HTTP errors: 404, unreachable, timeout, broken gzip — never the address'
   await assert.rejects(read('https://guides.example.org/broken.xml.gz'), { code: 'malformed' });
   await assert.rejects(read('https://guides.example.org/slow.xml'), { code: 'timeout' });
   assert.equal(sourceLabel(parseSource(secret)), 'iptv.example.net');
+  // Credentials in the address become a Basic header, out of the URL.
+  const basic = createFakeServer({
+    'https://guides.example.org/uk.xml': { body: fixture('epgshare-uk-bbc-one.xml') },
+  });
+  await readGuide(parseSource('https://me:p%40ss@guides.example.org/uk.xml'), {
+    parser: collect().parser,
+    fetchImpl: basic.fetch,
+  });
+  assert.equal(basic.requests[0].url, 'https://guides.example.org/uk.xml');
+  assert.equal(
+    basic.requests[0].headers.Authorization,
+    `Basic ${Buffer.from('me:p@ss').toString('base64')}`,
+  );
 });
 
 test('a guide file of the data volume, in ISO-8859-1', async () => {
