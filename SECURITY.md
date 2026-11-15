@@ -30,6 +30,21 @@ Gladys before reporting a problem.
 
 In scope: the code of this repository and the Docker image it publishes.
 
+What the integration handles:
+
+- **The guide address**, kept by Gladys in the integration configuration. An
+  IPTV provider's address may hold a user name and a password: the integration
+  never logs it nor writes it under `/data` (only its host name appears in the
+  logs, and a hash of it in the cache).
+- **`/data/xmltv-guide.json`**: the channel list and the programmes of the
+  followed channels from the last guide read, and the HTTP validators (ETag,
+  Last-Modified). No secret.
+- **Network**: outgoing HTTP(S) requests to the guide address only, a few
+  times a day. No port is opened, nothing is sent but the request itself.
+- **Input**: the guide is untrusted data. It is read as a stream with bounds
+  (element size, 1 GB uncompressed, 10-minute timeout), and its texts are only
+  published as plain text.
+
 Out of scope: Gladys Assistant itself (see its
 [security policy](https://github.com/GladysAssistant/Gladys/security/policy)),
-and the third-party services and devices the integration talks to.
+and the guide publishers.

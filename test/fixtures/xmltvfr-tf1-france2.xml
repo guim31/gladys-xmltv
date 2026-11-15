@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tv SYSTEM "xmltv.dtd">
+<!-- Generated with XML TV Fr v4.1.0 -->
+<tv source-info-url="https://github.com/racacax/XML-TV-Fr" source-info-name="XML TV Fr" generator-info-name="XML TV Fr" generator-info-url="https://github.com/racacax/XML-TV-Fr">
+    <channel id="Arte.fr">
+    <display-name>Arte</display-name>
+    <icon src="https://www.programme-tv.net/imgre/fit/~2~channel~d6bb7624abff43ac.png/480x480/quality/100/arte.png"/>
+  </channel>
+  <channel id="France2.fr">
+    <display-name>France 2</display-name>
+    <icon src="https://www.programme-tv.net/imgre/fit/~2~channel~606394a5b095653a.png/480x480/quality/100/france-2.png"/>
+  </channel>
+  <channel id="France3.fr">
+    <display-name>France 3</display-name>
+    <icon src="https://www.programme-tv.net/imgre/fit/~2~channel~61eebbb6e38360ae.png/480x480/quality/100/france-3.png"/>
+  </channel>
+  <channel id="M6.fr">
+    <display-name>M6</display-name>
+    <icon src="https://www.programme-tv.net/imgre/fit/~2~channel~46c2dbade9ac9fed.png/480x480/quality/100/m6.png"/>
+  </channel>
+  <channel id="TF1.fr">
+    <display-name>TF1</display-name>
+    <icon src="https://www.programme-tv.net/imgre/fit/~2~channel~f2b6de26acc4dc3e.png/480x480/quality/100/tf1.png"/>
+  </channel>
+  <programme start="20261115014000 +0100" stop="20261115014500 +0100" channel="France2.fr">
+    <title lang="fr">Météo 2</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/0/0/15220000.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115014500 +0100" stop="20261115035500 +0100" channel="France2.fr">
+    <title lang="fr">N'oubliez pas les paroles</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/0/3/16466303.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115035500 +0100" stop="20261115045500 +0100" channel="France2.fr">
+    <title lang="fr">Les enfants de la télé</title>
+    <sub-title lang="fr">Spéciale théâtre</sub-title>
+    <category lang="fr">Divertissement</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/0/0/15220002.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115045500 +0100" stop="20261115051000 +0100" channel="France2.fr">
+    <title lang="fr">Courant d'art</title>
+    <sub-title lang="fr">La potière de Sommières</sub-title>
+    <category lang="fr">Documentaire culturel</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/4/1/15183143.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115051000 +0100" stop="20261115060000 +0100" channel="France2.fr">
+    <title lang="fr">Tout le monde veut prendre sa place</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/7/8/15182874.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115060000 +0100" stop="20261115064500 +0100" channel="France2.fr">
+    <title lang="fr">Le 6h info</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/3/8/15182835.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115064500 +0100" stop="20261115080500 +0100" channel="France2.fr">
+    <title lang="fr">Télématin</title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/6/6/15801660.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115080500 +0100" stop="20261115081500 +0100" channel="France2.fr">
+    <title lang="fr">Journal 08h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/4/7/16140742.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115081500 +0100" stop="20261115083000 +0100" channel="France2.fr">
+    <title lang="fr">Télématin</title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/6/6/15801660.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115083000 +0100" stop="20261115084500 +0100" channel="France2.fr">
+    <title lang="fr">Sagesses bouddhistes</title>
+    <sub-title lang="fr">La voie du Bouddha : un chemin de guérison</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/4/0/15220045.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115084500 +0100" stop="20261115091500 +0100" channel="France2.fr">
+    <title lang="fr">Islam</title>
+    <sub-title lang="fr">Philippe Grenier : député musulman de la République</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/0/7/16199709.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115091500 +0100" stop="20261115100000 +0100" channel="France2.fr">
+    <title lang="fr">A l'origine</title>
+    <sub-title lang="fr">Histoires : Patrimoine juif de France - Lyon</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/5/0/15220054.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115100000 +0100" stop="20261115103000 +0100" channel="France2.fr">
+    <title lang="fr">Présence protestante</title>
+    <sub-title lang="fr">Mexique, les femmes de l'espoir</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/5/7/15220757.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115103000 +0100" stop="20261115110000 +0100" channel="France2.fr">
+    <title lang="fr">Le jour du Seigneur</title>
+    <sub-title lang="fr">Le monastère, un modèle d'économie durable</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/3/0/15220039.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115110000 +0100" stop="20261115115500 +0100" channel="France2.fr">
+    <title lang="fr">Messe</title>
+    <category lang="fr">Emission religieuse</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/4/0/15220046.jpg"/>
+    <episode-num system="xmltv_ns">0.93.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115115500 +0100" stop="20261115120000 +0100" channel="France2.fr">
+    <title lang="fr">Parole inattendue</title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/0/0/15220009.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115120000 +0100" stop="20261115125500 +0100" channel="France2.fr">
+    <title lang="fr">Tout le monde veut prendre sa place</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/7/8/15182874.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115125500 +0100" stop="20261115125700 +0100" channel="France2.fr">
+    <title lang="fr">C'est bon à savoir</title>
+    <sub-title lang="fr">Le jeûne intermittent. Est-ce une bonne idée ?</sub-title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/9/2/16164293.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115125700 +0100" stop="20261115130000 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115130000 +0100" stop="20261115132000 +0100" channel="France2.fr">
+    <title lang="fr">Journal 13h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/9/9/15751991.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115132000 +0100" stop="20261115140500 +0100" channel="France2.fr">
+    <title lang="fr">Franc-jeu</title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/1/7/16199710.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115140500 +0100" stop="20261115145500 +0100" channel="France2.fr">
+    <title lang="fr">13h15, le dimanche...</title>
+    <sub-title lang="fr">Le feuilleton des Français</sub-title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/1/7/16199712.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115145500 +0100" stop="20261115160000 +0100" channel="France2.fr">
+    <title lang="fr">13h15, le dimanche...</title>
+    <sub-title lang="fr">Successions : Fractures sociales</sub-title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/1/7/16199712.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115160000 +0100" stop="20261115170000 +0100" channel="France2.fr">
+    <title lang="fr">Un dimanche à la campagne</title>
+    <category lang="fr">Débat</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/4/9/15182948.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115170000 +0100" stop="20261115180500 +0100" channel="France2.fr">
+    <title lang="fr">Un dimanche à la campagne, la suite</title>
+    <category lang="fr">Débat</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/0/3/16466300.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115180500 +0100" stop="20261115191000 +0100" channel="France2.fr">
+    <title lang="fr">Les enfants de la télé</title>
+    <category lang="fr">Divertissement</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/0/0/15220002.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115191000 +0100" stop="20261115195500 +0100" channel="France2.fr">
+    <title lang="fr">Les Enfants de la télé, la suite</title>
+    <category lang="fr">Divertissement</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/9/9/15219993.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115195500 +0100" stop="20261115200000 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115200000 +0100" stop="20261115203000 +0100" channel="France2.fr">
+    <title lang="fr">Journal 20h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/1/9/15183910.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115203000 +0100" stop="20261115210000 +0100" channel="France2.fr">
+    <title lang="fr">20h30, le dimanche</title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/1/7/16199716.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115210000 +0100" stop="20261115210500 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115210500 +0100" stop="20261115211000 +0100" channel="France2.fr">
+    <title lang="fr">Réflexe !</title>
+    <sub-title lang="fr">Inondation</sub-title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/2/3/15847323.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115211000 +0100" stop="20261115223500 +0100" channel="France2.fr">
+    <title lang="fr">La traversée de Paris</title>
+    <category lang="fr">Comédie dramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/6/8/16262862.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115223500 +0100" stop="20261116001500 +0100" channel="France2.fr">
+    <title lang="fr">Un singe en hiver</title>
+    <category lang="fr">Comédie dramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/9/1/16238193.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116001500 +0100" stop="20261116001600 +0100" channel="France2.fr">
+    <title lang="fr">Le pitch cinéma</title>
+    <category lang="fr">Magazine culturel</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/6/9/15186960.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116001600 +0100" stop="20261116010500 +0100" channel="France2.fr">
+    <title lang="fr">Histoires courtes</title>
+    <sub-title lang="fr">Cycle "Blessures secrètes"</sub-title>
+    <category lang="fr">Magazine culturel</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/2/8/15759825.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116010500 +0100" stop="20261116031000 +0100" channel="France2.fr">
+    <title lang="fr">Nosferatu</title>
+    <category lang="fr">Film d'horreur</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/2/1/16144127.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116031000 +0100" stop="20261116031500 +0100" channel="France2.fr">
+    <title lang="fr">Météo 2</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/0/0/15220000.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116031500 +0100" stop="20261116044000 +0100" channel="France2.fr">
+    <title lang="fr">Harceleurs</title>
+    <category lang="fr">Téléfilm dramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/3/3/16230336.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116044000 +0100" stop="20261116045500 +0100" channel="France2.fr">
+    <title lang="fr">Pays et marchés du monde</title>
+    <sub-title lang="fr">Sénégal : Casamance, Ziguinchor</sub-title>
+    <category lang="fr">Documentaire de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/2/9/15182924.jpg"/>
+    <episode-num system="xmltv_ns">3.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116045500 +0100" stop="20261116050500 +0100" channel="France2.fr">
+    <title lang="fr">Pays et marchés du monde</title>
+    <sub-title lang="fr">France : Bretagne, Saint-Renan</sub-title>
+    <category lang="fr">Documentaire de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/2/9/15182924.jpg"/>
+    <episode-num system="xmltv_ns">3.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116050500 +0100" stop="20261116055500 +0100" channel="France2.fr">
+    <title lang="fr">Tout le monde veut prendre sa place</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/7/8/15182874.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116055500 +0100" stop="20261116060000 +0100" channel="France2.fr">
+    <title lang="fr">Immeuble partagé</title>
+    <sub-title lang="fr">Epices c'est la vie</sub-title>
+    <category lang="fr">Série humoristique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/2/3/15429327.jpg"/>
+    <episode-num system="xmltv_ns">1.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116060000 +0100" stop="20261116063000 +0100" channel="France2.fr">
+    <title lang="fr">Le 6h info</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/3/8/15182835.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116063000 +0100" stop="20261116080000 +0100" channel="France2.fr">
+    <title lang="fr">Télématin</title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/6/6/15801660.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116080000 +0100" stop="20261116081700 +0100" channel="France2.fr">
+    <title lang="fr">Journal 08h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/4/7/16140742.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116081700 +0100" stop="20261116091000 +0100" channel="France2.fr">
+    <title lang="fr">Télématin</title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/6/6/15801660.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116091000 +0100" stop="20261116104000 +0100" channel="France2.fr">
+    <title lang="fr">Télématin, la suite</title>
+    <category lang="fr">Magazine de services</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/5/7/16140753.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116104000 +0100" stop="20261116105000 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo climat outre-mer</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/1/8/15182818.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116105000 +0100" stop="20261116112000 +0100" channel="France2.fr">
+    <title lang="fr">Chacun son tour</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/3/9/15564934.jpg"/>
+    <episode-num system="xmltv_ns">0.1368.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116112000 +0100" stop="20261116115500 +0100" channel="France2.fr">
+    <title lang="fr">Chacun son tour</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/3/9/15564934.jpg"/>
+    <episode-num system="xmltv_ns">0.1369.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116115500 +0100" stop="20261116125000 +0100" channel="France2.fr">
+    <title lang="fr">Tout le monde veut prendre sa place</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/7/8/15182874.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116125000 +0100" stop="20261116125500 +0100" channel="France2.fr">
+    <title lang="fr">La minute des Maternelles</title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/4/1/15942140.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116125500 +0100" stop="20261116130000 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116130000 +0100" stop="20261116134000 +0100" channel="France2.fr">
+    <title lang="fr">Journal 13h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/0/9/15750908.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116134000 +0100" stop="20261116134500 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116134500 +0100" stop="20261116135500 +0100" channel="France2.fr">
+    <title lang="fr">Immeuble partagé</title>
+    <sub-title lang="fr">Epices c'est la vie</sub-title>
+    <category lang="fr">Série humoristique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/2/3/15429327.jpg"/>
+    <episode-num system="xmltv_ns">1.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116135500 +0100" stop="20261116150500 +0100" channel="France2.fr">
+    <title lang="fr">Ça commence aujourd'hui</title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/1/9/15750913.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116150500 +0100" stop="20261116161500 +0100" channel="France2.fr">
+    <title lang="fr">Le Mag de la santé</title>
+    <category lang="fr">Magazine scientifique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/5/5/16194555.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116161500 +0100" stop="20261116171500 +0100" channel="France2.fr">
+    <title lang="fr">Affaire conclue, tout le monde a quelque chose à vendre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/0/9/15182908.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116171500 +0100" stop="20261116175600 +0100" channel="France2.fr">
+    <title lang="fr">Affaire conclue, tout le monde a quelque chose à vendre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/0/9/15182908.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116175600 +0100" stop="20261116183500 +0100" channel="France2.fr">
+    <title lang="fr">Tout le monde a son mot à dire</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/2/7/16433726.jpg"/>
+    <episode-num system="xmltv_ns">0.2230.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116183500 +0100" stop="20261116191000 +0100" channel="France2.fr">
+    <title lang="fr">N'oubliez pas les paroles</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/1/8/15563814.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116191000 +0100" stop="20261116195500 +0100" channel="France2.fr">
+    <title lang="fr">N'oubliez pas les paroles</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/1/8/15563814.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116195500 +0100" stop="20261116200000 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116200000 +0100" stop="20261116210000 +0100" channel="France2.fr">
+    <title lang="fr">Journal 20h00</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/0/9/15741901.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116210000 +0100" stop="20261116210500 +0100" channel="France2.fr">
+    <title lang="fr">Journal Météo Climat</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/5/8/15182851.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116210500 +0100" stop="20261116211000 +0100" channel="France2.fr">
+    <title lang="fr">Basique, l'essentiel de la musique</title>
+    <category lang="fr">Magazine culturel</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/6/1/15183163.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116211000 +0100" stop="20261116224500 +0100" channel="France2.fr">
+    <title lang="fr">Disparition inquiétante</title>
+    <sub-title lang="fr">Peur sur le campus</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/7/4/15827477.jpg"/>
+    <episode-num system="xmltv_ns">0.5.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116224500 +0100" stop="20261117001000 +0100" channel="France2.fr">
+    <title lang="fr">Disparition inquiétante</title>
+    <sub-title lang="fr">Lorsque l'enfant paraît</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/7/4/15827477.jpg"/>
+    <episode-num system="xmltv_ns">0.6.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115055000 +0100" stop="20261115100000 +0100" channel="TF1.fr">
+    <title lang="fr">TFou</title>
+    <category lang="fr">Magazine jeunesse</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/3/9/15189930.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115100000 +0100" stop="20261115105000 +0100" channel="TF1.fr">
+    <title lang="fr">Automoto</title>
+    <category lang="fr">Magazine sportif</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/0/0/15722008.jpg"/>
+    <episode-num system="xmltv_ns">27.1356.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115105000 +0100" stop="20261115115000 +0100" channel="TF1.fr">
+    <title lang="fr">Téléfoot</title>
+    <category lang="fr">Magazine sportif</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/0/0/15722006.jpg"/>
+    <episode-num system="xmltv_ns">27.1214.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115115000 +0100" stop="20261115125000 +0100" channel="TF1.fr">
+    <title lang="fr">Les douze coups de midi</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/4/9/15189947.jpg"/>
+    <episode-num system="xmltv_ns">0.5975.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115125000 +0100" stop="20261115125500 +0100" channel="TF1.fr">
+    <title lang="fr">Petits plats en équilibre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/9/0/15558096.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115125500 +0100" stop="20261115130000 +0100" channel="TF1.fr">
+    <title lang="fr">Météo</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/9/15189938.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115130000 +0100" stop="20261115134000 +0100" channel="TF1.fr">
+    <title lang="fr">JT 13h</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/4/9/15189942.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115134000 +0100" stop="20261115145000 +0100" channel="TF1.fr">
+    <title lang="fr">Grands reportages</title>
+    <sub-title lang="fr">Pièces détachées : un business sous le capot</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/2/9/15201922.jpg"/>
+    <episode-num system="xmltv_ns">0.559.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115145000 +0100" stop="20261115160000 +0100" channel="TF1.fr">
+    <title lang="fr">Grands reportages</title>
+    <sub-title lang="fr">Nantes l'éveillée</sub-title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/2/9/15201922.jpg"/>
+    <episode-num system="xmltv_ns">0.502.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115160000 +0100" stop="20261115181500 +0100" channel="TF1.fr">
+    <title lang="fr">Rugby : Championnat des nations | Ecosse / Australie</title>
+    <category lang="fr">Rugby</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/6/9/16274969.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115181500 +0100" stop="20261115194500 +0100" channel="TF1.fr">
+    <title lang="fr">Sept à huit</title>
+    <category lang="fr">Magazine de société</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/0/6/15201601.jpg"/>
+    <episode-num system="xmltv_ns">0.11.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115194500 +0100" stop="20261115195000 +0100" channel="TF1.fr">
+    <title lang="fr">Le grand vrac</title>
+    <sub-title lang="fr">Sport</sub-title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/4/7/0/15186074.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115195000 +0100" stop="20261115195500 +0100" channel="TF1.fr">
+    <title lang="fr">Entrepreneurs, nouvelle génération</title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/3/4/15942437.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115195500 +0100" stop="20261115200000 +0100" channel="TF1.fr">
+    <title lang="fr">Météo</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/9/15189938.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115200000 +0100" stop="20261115203500 +0100" channel="TF1.fr">
+    <title lang="fr">JT 20h</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/5/9/15189959.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115203500 +0100" stop="20261115230000 +0100" channel="TF1.fr">
+    <title lang="fr">Football : Ligue des Nations UEFA | France / Turquie</title>
+    <category lang="fr">Football</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/5/5/16268558.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115230000 +0100" stop="20261115232500 +0100" channel="TF1.fr">
+    <title lang="fr">Après match</title>
+    <sub-title lang="fr">match</sub-title>
+    <category lang="fr">Magazine sportif</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/0/2/15869207.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261115232500 +0100" stop="20261116001500 +0100" channel="TF1.fr">
+    <title lang="fr">Esprits criminels</title>
+    <sub-title lang="fr">Dans la peau d'un autre</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/2/2/16263221.jpg"/>
+    <episode-num system="xmltv_ns">14.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116001500 +0100" stop="20261116010500 +0100" channel="TF1.fr">
+    <title lang="fr">Esprits criminels</title>
+    <sub-title lang="fr">La fille du serial killer</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/2/2/16263221.jpg"/>
+    <episode-num system="xmltv_ns">14.1.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116010500 +0100" stop="20261116015000 +0100" channel="TF1.fr">
+    <title lang="fr">Esprits criminels</title>
+    <sub-title lang="fr">Cliché mortel</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/1/2/2/16263221.jpg"/>
+    <episode-num system="xmltv_ns">14.2.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116015000 +0100" stop="20261116055000 +0100" channel="TF1.fr">
+    <title lang="fr">Programmes de la nuit</title>
+    <category lang="fr">Programme indéterminé</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/6/7/15176769.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116055000 +0100" stop="20261116065500 +0100" channel="TF1.fr">
+    <title lang="fr">TFou</title>
+    <category lang="fr">Magazine jeunesse</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/3/9/15189930.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116065500 +0100" stop="20261116100000 +0100" channel="TF1.fr">
+    <title lang="fr">Bonjour ! La Matinale TF1</title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/6/9/15189967.jpg"/>
+    <episode-num system="xmltv_ns">0.744.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116100000 +0100" stop="20261116105500 +0100" channel="TF1.fr">
+    <title lang="fr">Bonjour ! Avec vous</title>
+    <category lang="fr">Magazine d'information</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/5/1/16245150.jpg"/>
+    <episode-num system="xmltv_ns">0.185.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116105500 +0100" stop="20261116114500 +0100" channel="TF1.fr">
+    <title lang="fr">Les Feux de l'amour</title>
+    <category lang="fr">Série sentimentale</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/4/9/15189949.jpg"/>
+    <episode-num system="xmltv_ns">0.9606.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116114500 +0100" stop="20261116115000 +0100" channel="TF1.fr">
+    <title lang="fr">Petits plats en équilibre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/9/0/15558096.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116115000 +0100" stop="20261116125500 +0100" channel="TF1.fr">
+    <title lang="fr">Les douze coups de midi</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/4/9/15189947.jpg"/>
+    <episode-num system="xmltv_ns">0.5976.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116125500 +0100" stop="20261116130000 +0100" channel="TF1.fr">
+    <title lang="fr">Petits plats en équilibre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/9/0/15558096.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116130000 +0100" stop="20261116135000 +0100" channel="TF1.fr">
+    <title lang="fr">JT 13h</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/2/4/9/15189942.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116135000 +0100" stop="20261116135500 +0100" channel="TF1.fr">
+    <title lang="fr">Petits plats en équilibre</title>
+    <category lang="fr">Magazine de l'art de vivre</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/9/0/15558096.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116135500 +0100" stop="20261116140000 +0100" channel="TF1.fr">
+    <title lang="fr">Météo</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/9/15189938.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116140000 +0100" stop="20261116142500 +0100" channel="TF1.fr">
+    <title lang="fr">Plus belle la vie, encore plus belle</title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/3/2/15189235.jpg"/>
+    <episode-num system="xmltv_ns">2.714.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116142500 +0100" stop="20261116160000 +0100" channel="TF1.fr">
+    <title lang="fr">Noël au-dessus des nuages</title>
+    <category lang="fr">Téléfilm mélodramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/7/9/16278976.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116160000 +0100" stop="20261116173000 +0100" channel="TF1.fr">
+    <title lang="fr">Mon cher père Noël</title>
+    <category lang="fr">Téléfilm mélodramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/3/8/16268833.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116173000 +0100" stop="20261116183000 +0100" channel="TF1.fr">
+    <title lang="fr">Star Academy, la quotidienne</title>
+    <category lang="fr">Téléréalité</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/7/5/15971579.jpg"/>
+    <episode-num system="xmltv_ns">13.35.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116183000 +0100" stop="20261116191000 +0100" channel="TF1.fr">
+    <title lang="fr">Ici tout commence</title>
+    <category lang="fr">Série dramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/3/6/9/15189963.jpg"/>
+    <episode-num system="xmltv_ns">6.1567.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116191000 +0100" stop="20261116195500 +0100" channel="TF1.fr">
+    <title lang="fr">Demain nous appartient</title>
+    <category lang="fr">Série dramatique</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/0/8/9/15189980.jpg"/>
+    <episode-num system="xmltv_ns">9.2335.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116195500 +0100" stop="20261116200000 +0100" channel="TF1.fr">
+    <title lang="fr">Météo</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/9/15189938.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116200000 +0100" stop="20261116204500 +0100" channel="TF1.fr">
+    <title lang="fr">JT 20h</title>
+    <category lang="fr">Journal</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/9/5/9/15189959.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116204500 +0100" stop="20261116205500 +0100" channel="TF1.fr">
+    <title lang="fr">Tirage du Loto</title>
+    <category lang="fr">Jeu</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/7/5/0/15190057.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116205500 +0100" stop="20261116210500 +0100" channel="TF1.fr">
+    <title lang="fr">Météo</title>
+    <category lang="fr">Météo</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/9/15189938.jpg"/>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116210500 +0100" stop="20261116211000 +0100" channel="TF1.fr">
+    <title lang="fr">C'est Canteloup</title>
+    <category lang="fr">Divertissement</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/5/3/8/16268835.jpg"/>
+    <episode-num system="xmltv_ns">12.2109.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116211000 +0100" stop="20261116220500 +0100" channel="TF1.fr">
+    <title lang="fr">La comtesse de Monte-Cristo</title>
+    <sub-title lang="fr">Mercédès</sub-title>
+    <category lang="fr">Série d'aventures</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/4/9/16455946.jpg"/>
+    <episode-num system="xmltv_ns">0.0.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116220500 +0100" stop="20261116232000 +0100" channel="TF1.fr">
+    <title lang="fr">La comtesse de Monte-Cristo</title>
+    <sub-title lang="fr">Faria</sub-title>
+    <category lang="fr">Série d'aventures</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/6/4/9/16455946.jpg"/>
+    <episode-num system="xmltv_ns">0.1.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+  <programme start="20261116232000 +0100" stop="20261117000500 +0100" channel="TF1.fr">
+    <title lang="fr">New York Unité Spéciale</title>
+    <sub-title lang="fr">Dans le coma</sub-title>
+    <category lang="fr">Série</category>
+    <icon src="http://static-cdn.tv.sfr.net/data/img/pl/8/3/4/15190438.jpg"/>
+    <episode-num system="xmltv_ns">25.15.</episode-num>
+    <rating system="CSA">
+      <value>Tout public</value>
+    </rating>
+  </programme>
+</tv>

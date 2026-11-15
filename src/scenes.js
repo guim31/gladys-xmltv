@@ -1,41 +1,93 @@
 // -----------------------------------------------------------------------------
-// Scene actions (SDK v0.14+, Gladys 5.1+).
-//
-// A scene action is an OPERATION a scene author places in a scene, with
-// parameters and a result: "identify this device", "take a snapshot", "clean
-// these rooms". Each one is declared in the manifest `scene_actions` field
-// (key, label, `fields` in the config_schema grammar, scalar `outputs`) and
-// handled here, keyed by that same `key`; index.js registers every entry with
-// `gladys.onSceneAction(key, ...)`.
-//
-// Scene TRIGGERS are the other direction ("this happened"): they are fired by
-// the device that observes the event, see src/devices/motionSensor.js.
-//
-// The rules that matter:
-//   - `fields` arrive RESOLVED: scene variables substituted, defaults applied,
-//     validated by the core; a `"source": "devices"` field is the chosen
-//     device external_id;
-//   - resolve an object of the declared `outputs` (scalars only), readable by
-//     the following actions of the scene, or `undefined` for none. Keys not
-//     declared in the manifest are dropped by the core;
-//   - throwing fails THIS action only: the scene logs it and continues. A
-//     scene action is never a condition: return an output and let the scene
-//     author gate on it;
-//   - never fire a scene event as a consequence of a received action: a scene
-//     bound to that event would loop through the integration.
+// Scene actions (manifest `scene_actions`). They read the guide in memory, in
+// the language of the configuration (a scene action does not receive the
+// user's language), and return flat outputs for the next actions of the scene
+// ("Tonight on France 2: {{title}} at {{start}}").
 // -----------------------------------------------------------------------------
 
-import { createLogger } from '@gladysassistant/integration-sdk';
-import { signalDevice } from './devices/index.js';
+import { formatDay, formatTime, langOf } from './i18n.js';
 
-const logger = createLogger({ name: 'scenes' });
+export const MOMENTS = ['now', 'next', 'tonight'];
+
+const MINUTE_MS = 60_000;
+
+const notFound = () => ({
+  found: 0,
+  channel: '',
+  title: '',
+  subtitle: '',
+  category: '',
+  day: '',
+  start: '',
+  end: '',
+  minutes: -1,
+});
+
+function describe(hub, channelName, programme, minutes) {
+  const lang = langOf(hub.config.language);
+  return {
+    found: 1,
+    channel: channelName,
+    title: programme.title,
+    subtitle: programme.subtitle ?? '',
+    category: programme.category ?? '',
+    day: formatDay(programme.start, lang),
+    start: formatTime(programme.start, lang),
+    end: formatTime(programme.stop, lang),
+    minutes,
+  };
+}
+
+const minutesUntil = (from, to) => Math.max(0, Math.ceil((to - from) / MINUTE_MS));
 
 export const SCENE_ACTIONS = {
-  // The ack is awaited under the action's `timeout_seconds` (15 s in the
-  // manifest), counted from the moment the scene reaches the action.
-  async identify_device(gladys, { fields, config }) {
-    logger.info(`Scene action identify_device <- ${fields.device}`);
-    const signalled = await signalDevice(gladys, fields.device, config);
-    return { signalled };
+  /** What is on a channel now, next or tonight. */
+  whats_on(hub, { fields = {} }) {
+    if (!hub.guide) {
+      throw new Error('No guide read yet');
+    }
+    const channel = hub.channelByDevice(fields.channel);
+    if (!channel) {
+      return notFound();
+    }
+    const name =
+      hub.createdChannels().find((created) => created.id === channel.id)?.name ?? channel.name;
+    const now = hub.now();
+    const view = hub.view(channel.id, now);
+    const moment = MOMENTS.includes(fields.moment) ? fields.moment : 'now';
+    if (moment === 'now') {
+      return view.current
+        ? describe(hub, name, view.current, minutesUntil(now, view.current.stop))
+        : notFound();
+    }
+    if (moment === 'next') {
+      return view.next
+        ? describe(hub, name, view.next, minutesUntil(now, view.next.start))
+        : notFound();
+    }
+    return view.tonight
+      ? describe(hub, name, view.tonight.programme, minutesUntil(now, view.tonight.programme.start))
+      : notFound();
+  },
+
+  /** The next airing of a title on the followed channels. */
+  find_programme(hub, { fields = {} }) {
+    if (!hub.guide) {
+      throw new Error('No guide read yet');
+    }
+    const keyword = typeof fields.keyword === 'string' ? fields.keyword : '';
+    const now = hub.now();
+    const result = hub.guide.find(
+      keyword,
+      hub.followed.map((channel) => channel.id),
+      now,
+    );
+    if (!result) {
+      return notFound();
+    }
+    const channel = hub.followed.find((item) => item.id === result.channelId);
+    const name =
+      hub.createdChannels().find((created) => created.id === channel.id)?.name ?? channel.name;
+    return describe(hub, name, result.programme, minutesUntil(now, result.programme.start));
   },
 };

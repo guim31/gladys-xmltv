@@ -1,177 +1,1031 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "XMLTV TV guide",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "What is on now, next and tonight on your TV channels, from any XMLTV guide.",
+    "fr": "Ce qui passe maintenant, ensuite et ce soir sur vos chaînes, depuis tout guide XMLTV.",
+    "de": "Was jetzt, danach und heute Abend auf deinen Sendern läuft, aus jedem XMLTV-Guide.",
+    "es": "Lo que se emite ahora, después y esta noche en sus cadenas, desde cualquier guía XMLTV."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "docker_image": "ghcr.io/guim31/gladys-xmltv:1.0.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-xmltv/main/cover.png",
+  "categories": ["multimedia"],
+  "transports": ["local"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "How it works",
+        "fr": "Fonctionnement",
+        "de": "So funktioniert es",
+        "es": "Funcionamiento"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Enter the address of an XMLTV guide (.xml or .xml.gz), then the channels you follow. Press \"Test the guide\", and add the channels from the Discovery tab. The guide is downloaded at most every 6 hours.",
+        "fr": "Indiquez l'adresse d'un guide XMLTV (.xml ou .xml.gz), puis les chaînes suivies. Appuyez sur « Tester le guide » et ajoutez les chaînes depuis l'onglet Découverte. Le guide est téléchargé au plus toutes les 6 heures.",
+        "de": "Gib die Adresse eines XMLTV-Guides (.xml oder .xml.gz) und die verfolgten Sender ein. Drücke „Programmführer testen“ und füge die Sender über den Tab „Entdecken“ hinzu. Der Guide wird höchstens alle 6 Stunden geladen.",
+        "es": "Indique la dirección de una guía XMLTV (.xml o .xml.gz) y las cadenas que sigue. Pulse «Probar la guía» y añada las cadenas desde la pestaña Descubrimiento. La guía se descarga como máximo cada 6 horas."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://xmltvfr.fr",
+          "label": {
+            "en": "XMLTV guides for France",
+            "fr": "Guides XMLTV France",
+            "de": "XMLTV-Guides Frankreich",
+            "es": "Guías XMLTV de Francia"
+          }
+        },
+        {
+          "url": "https://github.com/iptv-org/epg",
+          "label": {
+            "en": "Guides of other countries",
+            "fr": "Guides d'autres pays",
+            "de": "Guides anderer Länder",
+            "es": "Guías de otros países"
+          }
+        },
+        {
+          "url": "https://github.com/guim31/gladys-xmltv#readme",
+          "label": {
+            "en": "Documentation",
+            "fr": "Documentation",
+            "de": "Dokumentation",
+            "es": "Documentación"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "guide_url",
+      "type": "string",
+      "label": {
+        "en": "Guide address",
+        "fr": "Adresse du guide",
+        "de": "Adresse des Programmführers",
+        "es": "Dirección de la guía"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
+      "description": {
+        "en": "An https:// or http:// address, or a file of the data volume (/data/guide.xml.gz).",
+        "fr": "Une adresse https:// ou http://, ou un fichier du volume de données (/data/guide.xml.gz).",
+        "de": "Eine Adresse mit https:// oder http:// oder eine Datei im Datenvolume (/data/guide.xml.gz).",
+        "es": "Una dirección https:// o http://, o un archivo del volumen de datos (/data/guide.xml.gz)."
+      },
+      "placeholder": {
+        "en": "e.g. https://xmltvfr.fr/xmltv/xmltv_tnt.xml.gz",
+        "fr": "ex. https://xmltvfr.fr/xmltv/xmltv_tnt.xml.gz",
+        "de": "z. B. https://xmltvfr.fr/xmltv/xmltv_tnt.xml.gz",
+        "es": "p. ej. https://xmltvfr.fr/xmltv/xmltv_tnt.xml.gz"
+      },
       "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
+      "default": ""
     },
     {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
-      "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+      "key": "channels",
+      "type": "string",
+      "label": {
+        "en": "Followed channels",
+        "fr": "Chaînes suivies",
+        "de": "Verfolgte Sender",
+        "es": "Cadenas seguidas"
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
+      "description": {
+        "en": "Channel ids or names of the guide, separated by commas, 20 at most. \"List the channels\" shows them.",
+        "fr": "Identifiants ou noms des chaînes du guide, séparés par des virgules, 20 au plus. « Lister les chaînes » les affiche.",
+        "de": "IDs oder Namen der Sender im Guide, durch Kommas getrennt, höchstens 20. „Sender auflisten“ zeigt sie an.",
+        "es": "Identificadores o nombres de las cadenas de la guía, separados por comas, 20 como máximo. «Listar las cadenas» los muestra."
+      },
+      "placeholder": {
+        "en": "e.g. TF1.fr, France 2, Arte",
+        "fr": "ex. TF1.fr, France 2, Arte",
+        "de": "z. B. TF1.fr, France 2, Arte",
+        "es": "p. ej. TF1.fr, France 2, Arte"
+      },
       "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
+      "default": ""
     },
     {
-      "key": "unit",
+      "key": "evening_time",
       "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
+      "label": {
+        "en": "Evening start",
+        "fr": "Début de soirée",
+        "de": "Beginn des Abendprogramms",
+        "es": "Inicio de la noche"
+      },
+      "description": {
+        "en": "The \"Tonight\" programme is the first one starting from this time.",
+        "fr": "Le programme « Ce soir » est le premier qui commence à partir de cette heure.",
+        "de": "Die Sendung „Heute Abend“ ist die erste, die ab dieser Uhrzeit beginnt.",
+        "es": "El programa «Esta noche» es el primero que empieza a partir de esta hora."
+      },
       "required": false,
-      "default": "celsius",
+      "default": "21:00",
       "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
+        {
+          "value": "19:30",
+          "label": {
+            "en": "19:30",
+            "fr": "19 h 30",
+            "de": "19:30",
+            "es": "19:30"
+          }
+        },
+        {
+          "value": "19:45",
+          "label": {
+            "en": "19:45",
+            "fr": "19 h 45",
+            "de": "19:45",
+            "es": "19:45"
+          }
+        },
+        {
+          "value": "20:00",
+          "label": {
+            "en": "20:00",
+            "fr": "20 h 00",
+            "de": "20:00",
+            "es": "20:00"
+          }
+        },
+        {
+          "value": "20:15",
+          "label": {
+            "en": "20:15",
+            "fr": "20 h 15",
+            "de": "20:15",
+            "es": "20:15"
+          }
+        },
+        {
+          "value": "20:30",
+          "label": {
+            "en": "20:30",
+            "fr": "20 h 30",
+            "de": "20:30",
+            "es": "20:30"
+          }
+        },
+        {
+          "value": "20:45",
+          "label": {
+            "en": "20:45",
+            "fr": "20 h 45",
+            "de": "20:45",
+            "es": "20:45"
+          }
+        },
+        {
+          "value": "21:00",
+          "label": {
+            "en": "21:00",
+            "fr": "21 h 00",
+            "de": "21:00",
+            "es": "21:00"
+          }
+        },
+        {
+          "value": "21:15",
+          "label": {
+            "en": "21:15",
+            "fr": "21 h 15",
+            "de": "21:15",
+            "es": "21:15"
+          }
+        },
+        {
+          "value": "21:30",
+          "label": {
+            "en": "21:30",
+            "fr": "21 h 30",
+            "de": "21:30",
+            "es": "21:30"
+          }
+        },
+        {
+          "value": "21:45",
+          "label": {
+            "en": "21:45",
+            "fr": "21 h 45",
+            "de": "21:45",
+            "es": "21:45"
+          }
+        },
+        {
+          "value": "22:00",
+          "label": {
+            "en": "22:00",
+            "fr": "22 h 00",
+            "de": "22:00",
+            "es": "22:00"
+          }
+        },
+        {
+          "value": "22:15",
+          "label": {
+            "en": "22:15",
+            "fr": "22 h 15",
+            "de": "22:15",
+            "es": "22:15"
+          }
+        },
+        {
+          "value": "22:30",
+          "label": {
+            "en": "22:30",
+            "fr": "22 h 30",
+            "de": "22:30",
+            "es": "22:30"
+          }
+        }
       ]
     },
     {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
-      "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+      "key": "refresh_hours",
+      "type": "select",
+      "label": {
+        "en": "Download the guide",
+        "fr": "Télécharger le guide",
+        "de": "Programmführer laden",
+        "es": "Descargar la guía"
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": "12",
+      "options": [
+        {
+          "value": "6",
+          "label": {
+            "en": "Every 6 hours",
+            "fr": "Toutes les 6 heures",
+            "de": "Alle 6 Stunden",
+            "es": "Cada 6 horas"
+          }
+        },
+        {
+          "value": "12",
+          "label": {
+            "en": "Every 12 hours",
+            "fr": "Toutes les 12 heures",
+            "de": "Alle 12 Stunden",
+            "es": "Cada 12 horas"
+          }
+        },
+        {
+          "value": "24",
+          "label": {
+            "en": "Once a day",
+            "fr": "Une fois par jour",
+            "de": "Einmal am Tag",
+            "es": "Una vez al día"
+          }
+        }
+      ]
+    },
+    {
+      "key": "keywords",
+      "type": "string",
+      "label": {
+        "en": "Keywords for the scenes",
+        "fr": "Mots-clés pour les scènes",
+        "de": "Stichwörter für Szenen",
+        "es": "Palabras clave para las escenas"
+      },
+      "description": {
+        "en": "Titles to watch for on the followed channels, separated by commas. Their start fires the \"Programme with a keyword\" trigger.",
+        "fr": "Titres à guetter sur les chaînes suivies, séparés par des virgules. Leur début déclenche « Programme avec un mot-clé ».",
+        "de": "Titel, auf die du bei den verfolgten Sendern achten willst, durch Kommas getrennt. Der Beginn einer solchen Sendung löst „Sendung mit Stichwort“ aus.",
+        "es": "Títulos que vigilar en las cadenas seguidas, separados por comas. Su inicio activa «Programa con una palabra clave»."
+      },
+      "placeholder": {
+        "en": "e.g. Top 14, Koh-Lanta",
+        "fr": "ex. Top 14, Koh-Lanta",
+        "de": "z. B. Tatort, Champions League",
+        "es": "p. ej. LaLiga, MasterChef"
+      },
+      "required": false,
+      "default": ""
+    },
+    {
+      "key": "advance_minutes",
+      "type": "select",
+      "label": {
+        "en": "Advance warning",
+        "fr": "Prévenir en avance",
+        "de": "Vorwarnung",
+        "es": "Aviso anticipado"
+      },
+      "description": {
+        "en": "The trigger can also fire this many minutes before the start.",
+        "fr": "Le déclencheur peut aussi partir autant de minutes avant le début.",
+        "de": "Der Auslöser kann auch so viele Minuten vor dem Beginn auslösen.",
+        "es": "El disparador también puede activarse tantos minutos antes del inicio."
+      },
+      "required": false,
+      "default": "5",
+      "options": [
+        {
+          "value": "0",
+          "label": {
+            "en": "No",
+            "fr": "Non",
+            "de": "Nein",
+            "es": "No"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "en": "5 minutes before",
+            "fr": "5 minutes avant",
+            "de": "5 Minuten vorher",
+            "es": "5 minutos antes"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "en": "10 minutes before",
+            "fr": "10 minutes avant",
+            "de": "10 Minuten vorher",
+            "es": "10 minutos antes"
+          }
+        },
+        {
+          "value": "15",
+          "label": {
+            "en": "15 minutes before",
+            "fr": "15 minutes avant",
+            "de": "15 Minuten vorher",
+            "es": "15 minutos antes"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 minutes before",
+            "fr": "30 minutes avant",
+            "de": "30 Minuten vorher",
+            "es": "30 minutos antes"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Feature names, published texts and scene outputs. The widget follows the dashboard.",
+        "fr": "Noms des fonctionnalités, textes publiés et sorties des scènes. Le widget suit le tableau de bord.",
+        "de": "Namen der Funktionen, veröffentlichte Texte und Szenenausgaben. Das Widget folgt dem Dashboard.",
+        "es": "Nombres de las funciones, textos publicados y salidas de las escenas. El widget sigue el panel."
+      },
+      "required": false,
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
+      "key": "test_guide",
+      "label": {
+        "en": "Test the guide",
+        "fr": "Tester le guide",
+        "de": "Programmführer testen",
+        "es": "Probar la guía"
+      },
+      "description": {
+        "en": "Downloads the guide now and says which followed channels it holds.",
+        "fr": "Télécharge le guide maintenant et dit quelles chaînes suivies il contient.",
+        "de": "Lädt den Programmführer jetzt und sagt, welche verfolgten Sender er enthält.",
+        "es": "Descarga la guía ahora e indica qué cadenas seguidas contiene."
+      },
+      "timeout_seconds": 120
     },
     {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
+      "key": "list_channels",
+      "label": {
+        "en": "List the channels",
+        "fr": "Lister les chaînes",
+        "de": "Sender auflisten",
+        "es": "Listar las cadenas"
+      },
+      "description": {
+        "en": "The channels of the last guide read, with their ids, 60 at most.",
+        "fr": "Les chaînes du dernier guide lu, avec leurs identifiants, 60 au plus.",
+        "de": "Die Sender des zuletzt gelesenen Guides mit ihren IDs, höchstens 60.",
+        "es": "Las cadenas de la última guía leída, con sus identificadores, 60 como máximo."
+      },
+      "timeout_seconds": 10,
       "fields": [
         {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "key": "filter",
+          "type": "string",
+          "label": {
+            "en": "Search",
+            "fr": "Recherche",
+            "de": "Suche",
+            "es": "Búsqueda"
+          },
+          "placeholder": {
+            "en": "e.g. BBC",
+            "fr": "ex. France",
+            "de": "z. B. ARD",
+            "es": "p. ej. TVE"
+          },
+          "required": false
         }
       ]
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "keyword_programme",
+      "label": {
+        "en": "Programme with a keyword",
+        "fr": "Programme avec un mot-clé",
+        "de": "Sendung mit Stichwort",
+        "es": "Programa con una palabra clave"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "A programme whose title holds one of the configured keywords starts, or is about to.",
+        "fr": "Un programme dont le titre contient un des mots-clés configurés commence, ou va commencer.",
+        "de": "Eine Sendung, deren Titel ein konfiguriertes Stichwort enthält, beginnt oder beginnt gleich.",
+        "es": "Un programa cuyo título contiene una de las palabras clave configuradas empieza o va a empezar."
       },
       "fields": [
         {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "key": "keyword",
+          "type": "string",
+          "label": {
+            "en": "Keyword",
+            "fr": "Mot-clé",
+            "de": "Stichwort",
+            "es": "Palabra clave"
+          },
+          "description": {
+            "en": "As written in the configuration. Empty: every keyword.",
+            "fr": "Tel qu'écrit dans la configuration. Vide : tous les mots-clés.",
+            "de": "Wie in der Konfiguration geschrieben. Leer: alle Stichwörter.",
+            "es": "Tal como está escrita en la configuración. Vacío: todas."
+          },
+          "placeholder": {
+            "en": "e.g. Top 14",
+            "fr": "ex. Top 14",
+            "de": "z. B. Tatort",
+            "es": "p. ej. LaLiga"
+          }
         },
         {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "key": "channel",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Channel",
+            "fr": "Chaîne",
+            "de": "Sender",
+            "es": "Cadena"
+          },
+          "description": {
+            "en": "Empty: every followed channel.",
+            "fr": "Vide : toutes les chaînes suivies.",
+            "de": "Leer: alle verfolgten Sender.",
+            "es": "Vacío: todas las cadenas seguidas."
+          },
+          "required": false
+        },
+        {
+          "key": "moment",
+          "type": "select",
+          "label": {
+            "en": "When",
+            "fr": "Quand",
+            "de": "Wann",
+            "es": "Cuándo"
+          },
+          "required": true,
+          "default": "start",
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "start",
+              "label": {
+                "en": "At the start",
+                "fr": "Au début",
+                "de": "Zum Beginn",
+                "es": "Al inicio"
+              }
+            },
+            {
+              "value": "before",
+              "label": {
+                "en": "Before the start (advance warning)",
+                "fr": "Avant le début (prévenir en avance)",
+                "de": "Vor dem Beginn (Vorwarnung)",
+                "es": "Antes del inicio (aviso anticipado)"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "keyword",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Keyword",
+            "fr": "Mot-clé",
+            "de": "Stichwort",
+            "es": "Palabra clave"
+          }
+        },
+        {
+          "key": "channel_name",
+          "type": "string",
+          "label": {
+            "en": "Channel",
+            "fr": "Chaîne",
+            "de": "Sender",
+            "es": "Cadena"
+          }
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "label": {
+            "en": "Title",
+            "fr": "Titre",
+            "de": "Titel",
+            "es": "Título"
+          }
+        },
+        {
+          "key": "subtitle",
+          "type": "string",
+          "label": {
+            "en": "Subtitle (episode)",
+            "fr": "Sous-titre (épisode)",
+            "de": "Untertitel (Folge)",
+            "es": "Subtítulo (episodio)"
+          }
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "label": {
+            "en": "Category",
+            "fr": "Catégorie",
+            "de": "Kategorie",
+            "es": "Categoría"
+          }
+        },
+        {
+          "key": "start",
+          "type": "string",
+          "label": {
+            "en": "Start time",
+            "fr": "Heure de début",
+            "de": "Beginn",
+            "es": "Hora de inicio"
+          }
+        },
+        {
+          "key": "end",
+          "type": "string",
+          "label": {
+            "en": "End time",
+            "fr": "Heure de fin",
+            "de": "Ende",
+            "es": "Hora de fin"
+          }
+        },
+        {
+          "key": "duration",
+          "type": "number",
+          "label": {
+            "en": "Duration (minutes)",
+            "fr": "Durée (minutes)",
+            "de": "Dauer (Minuten)",
+            "es": "Duración (minutos)"
+          }
         }
       ]
     }
   ],
   "scene_actions": [
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "whats_on",
+      "label": {
+        "en": "Read a channel's programme",
+        "fr": "Lire le programme d'une chaîne",
+        "de": "Programm eines Senders lesen",
+        "es": "Leer el programa de una cadena"
       },
-      "timeout_seconds": 15,
+      "description": {
+        "en": "What is on a followed channel now, next or tonight.",
+        "fr": "Ce qui passe sur une chaîne suivie maintenant, ensuite ou ce soir.",
+        "de": "Was auf einem verfolgten Sender jetzt, danach oder heute Abend läuft.",
+        "es": "Lo que se emite en una cadena seguida ahora, después o esta noche."
+      },
+      "timeout_seconds": 10,
       "fields": [
         {
-          "key": "device",
+          "key": "channel",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
+          "label": {
+            "en": "Channel",
+            "fr": "Chaîne",
+            "de": "Sender",
+            "es": "Cadena"
+          },
+          "required": true
+        },
+        {
+          "key": "moment",
+          "type": "select",
+          "label": {
+            "en": "When",
+            "fr": "Quand",
+            "de": "Wann",
+            "es": "Cuándo"
+          },
+          "required": true,
+          "options": [
+            {
+              "value": "now",
+              "label": {
+                "en": "Now",
+                "fr": "En ce moment",
+                "de": "Jetzt",
+                "es": "Ahora"
+              }
+            },
+            {
+              "value": "next",
+              "label": {
+                "en": "Next",
+                "fr": "Ensuite",
+                "de": "Danach",
+                "es": "A continuación"
+              }
+            },
+            {
+              "value": "tonight",
+              "label": {
+                "en": "Tonight",
+                "fr": "Ce soir",
+                "de": "Heute Abend",
+                "es": "Esta noche"
+              }
+            }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "key": "found",
+          "type": "number",
+          "label": {
+            "en": "Found (1) or not (0)",
+            "fr": "Trouvé (1) ou non (0)",
+            "de": "Gefunden (1) oder nicht (0)",
+            "es": "Encontrado (1) o no (0)"
+          }
+        },
+        {
+          "key": "channel",
+          "type": "string",
+          "label": {
+            "en": "Channel",
+            "fr": "Chaîne",
+            "de": "Sender",
+            "es": "Cadena"
+          }
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "label": {
+            "en": "Title",
+            "fr": "Titre",
+            "de": "Titel",
+            "es": "Título"
+          }
+        },
+        {
+          "key": "subtitle",
+          "type": "string",
+          "label": {
+            "en": "Subtitle (episode)",
+            "fr": "Sous-titre (épisode)",
+            "de": "Untertitel (Folge)",
+            "es": "Subtítulo (episodio)"
+          }
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "label": {
+            "en": "Category",
+            "fr": "Catégorie",
+            "de": "Kategorie",
+            "es": "Categoría"
+          }
+        },
+        {
+          "key": "day",
+          "type": "string",
+          "label": {
+            "en": "Day",
+            "fr": "Jour",
+            "de": "Tag",
+            "es": "Día"
+          }
+        },
+        {
+          "key": "start",
+          "type": "string",
+          "label": {
+            "en": "Start time",
+            "fr": "Heure de début",
+            "de": "Beginn",
+            "es": "Hora de inicio"
+          }
+        },
+        {
+          "key": "end",
+          "type": "string",
+          "label": {
+            "en": "End time",
+            "fr": "Heure de fin",
+            "de": "Ende",
+            "es": "Hora de fin"
+          }
+        },
+        {
+          "key": "minutes",
+          "type": "number",
+          "label": {
+            "en": "Minutes until it starts, or left (now)",
+            "fr": "Minutes avant le début, ou restantes (en cours)",
+            "de": "Minuten bis zum Beginn oder Restzeit (jetzt)",
+            "es": "Minutos hasta el inicio, o restantes (ahora)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "find_programme",
+      "label": {
+        "en": "Find a programme",
+        "fr": "Chercher un programme",
+        "de": "Sendung suchen",
+        "es": "Buscar un programa"
+      },
+      "description": {
+        "en": "The next airing of a title on the followed channels.",
+        "fr": "La prochaine diffusion d'un titre sur les chaînes suivies.",
+        "de": "Die nächste Ausstrahlung eines Titels auf den verfolgten Sendern.",
+        "es": "La próxima emisión de un título en las cadenas seguidas."
+      },
+      "timeout_seconds": 10,
+      "fields": [
+        {
+          "key": "keyword",
+          "type": "string",
+          "label": {
+            "en": "Title or part of it",
+            "fr": "Titre ou partie du titre",
+            "de": "Titel oder Teil davon",
+            "es": "Título o parte de él"
+          },
+          "placeholder": {
+            "en": "e.g. Top 14",
+            "fr": "ex. Top 14",
+            "de": "z. B. Tatort",
+            "es": "p. ej. LaLiga"
+          },
           "required": true
         }
       ],
       "outputs": [
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "found",
+          "type": "number",
+          "label": {
+            "en": "Found (1) or not (0)",
+            "fr": "Trouvé (1) ou non (0)",
+            "de": "Gefunden (1) oder nicht (0)",
+            "es": "Encontrado (1) o no (0)"
+          }
+        },
+        {
+          "key": "channel",
+          "type": "string",
+          "label": {
+            "en": "Channel",
+            "fr": "Chaîne",
+            "de": "Sender",
+            "es": "Cadena"
+          }
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "label": {
+            "en": "Title",
+            "fr": "Titre",
+            "de": "Titel",
+            "es": "Título"
+          }
+        },
+        {
+          "key": "subtitle",
+          "type": "string",
+          "label": {
+            "en": "Subtitle (episode)",
+            "fr": "Sous-titre (épisode)",
+            "de": "Untertitel (Folge)",
+            "es": "Subtítulo (episodio)"
+          }
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "label": {
+            "en": "Category",
+            "fr": "Catégorie",
+            "de": "Kategorie",
+            "es": "Categoría"
+          }
+        },
+        {
+          "key": "day",
+          "type": "string",
+          "label": {
+            "en": "Day",
+            "fr": "Jour",
+            "de": "Tag",
+            "es": "Día"
+          }
+        },
+        {
+          "key": "start",
+          "type": "string",
+          "label": {
+            "en": "Start time",
+            "fr": "Heure de début",
+            "de": "Beginn",
+            "es": "Hora de inicio"
+          }
+        },
+        {
+          "key": "end",
+          "type": "string",
+          "label": {
+            "en": "End time",
+            "fr": "Heure de fin",
+            "de": "Ende",
+            "es": "Hora de fin"
+          }
+        },
+        {
+          "key": "minutes",
+          "type": "number",
+          "label": {
+            "en": "Minutes until it starts, or left (now)",
+            "fr": "Minutes avant le début, ou restantes (en cours)",
+            "de": "Minuten bis zum Beginn oder Restzeit (jetzt)",
+            "es": "Minutos hasta el inicio, o restantes (ahora)"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "tv_guide",
+      "label": {
+        "en": "TV guide",
+        "fr": "Programme TV",
+        "de": "TV-Programm",
+        "es": "Guía de TV"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Now and next, or tonight, on the followed channels.",
+        "fr": "Maintenant et ensuite, ou ce soir, sur les chaînes suivies.",
+        "de": "Jetzt und danach oder heute Abend auf den verfolgten Sendern.",
+        "es": "Ahora y después, o esta noche, en las cadenas seguidas."
+      },
+      "icon": "tv",
+      "settings": [
+        {
+          "key": "channels",
+          "type": "multi_select",
+          "source": "devices",
+          "label": {
+            "en": "Channels",
+            "fr": "Chaînes",
+            "de": "Sender",
+            "es": "Cadenas"
+          },
+          "description": {
+            "en": "8 at most. Empty: the first 8 channels added.",
+            "fr": "8 au plus. Vide : les 8 premières chaînes ajoutées.",
+            "de": "Höchstens 8. Leer: die ersten 8 hinzugefügten Sender.",
+            "es": "8 como máximo. Vacío: las 8 primeras cadenas añadidas."
+          }
+        },
+        {
+          "key": "view",
+          "type": "select",
+          "label": {
+            "en": "Show",
+            "fr": "Afficher",
+            "de": "Anzeigen",
+            "es": "Mostrar"
+          },
+          "default": "now",
+          "options": [
+            {
+              "value": "now",
+              "label": {
+                "en": "On now",
+                "fr": "En ce moment",
+                "de": "Läuft gerade",
+                "es": "Ahora"
+              }
+            },
+            {
+              "value": "tonight",
+              "label": {
+                "en": "Tonight",
+                "fr": "Ce soir",
+                "de": "Heute Abend",
+                "es": "Esta noche"
+              }
+            }
+          ]
+        },
+        {
+          "key": "show_badge",
+          "type": "boolean",
+          "label": {
+            "en": "Show the time left or the start time",
+            "fr": "Afficher le temps restant ou l'heure de début",
+            "de": "Restzeit oder Beginn anzeigen",
+            "es": "Mostrar el tiempo restante o la hora de inicio"
+          },
+          "default": true
+        }
+      ]
     }
   ]
 }

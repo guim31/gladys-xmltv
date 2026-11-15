@@ -31,16 +31,22 @@ pushing.
 ## Architecture
 
 ```
-index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+index.js                          SDK wiring only (registerHandlers, shutdown)
+src/app.js                        every SDK handler, on the hub (same wiring in the tests)
+src/hub.js                        state machine: download, cache, devices, minute tick, trigger
+src/xmltv/source.js               http(s) or /data file, gzip by magic bytes, ETag, limits
+src/xmltv/parser.js               streaming XMLTV scanner (channel / programme elements)
+src/xmltv/time.js                 XMLTV dates and offsets
+src/guide.js                      guide in memory: now, next, tonight, keyword search
+src/devices.js                    one device per followed channel, its states
+src/scenes.js                     scene actions (whats_on, find_programme)
+src/widgets.js                    dashboard widget (tv_guide)
+src/i18n.js                       every text, en / fr / de / es
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
-gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
-test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
+src/store.js, src/issues.js       cache under /data; repeated failures logged once
+gladys-assistant-integration.json manifest
+docs/{en,fr,de,es}.md             user documentation, re-hosted by Gladys
+test/                             node --test, fake Gladys of the SDK + fake guide server
 .github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
 ```
 
@@ -70,10 +76,34 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** exists in English, French, German and Spanish: action
+  messages, manifest texts, and `docs/{en,fr,de,es}.md`, kept in sync.
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
+
+## XMLTV specifics
+
+- **Guides are big**: the complete xmltvfr.fr guide is 146 MB of XML (18 MB
+  gzip), the sandbox 256 MB. Never buffer the file: `readGuide` streams it
+  into the scanner, which keeps only the followed channels. Measured: ~1 s,
+  under 100 MB RSS. Keep it that way (no DOM parser, no `response.text()`).
+- **DTD order**: `channel*` then `programme*`. Followed channels typed by name
+  are resolved on the first programme; a guide listing a channel after its
+  programmes resolves it without programmes.
+- **Dates**: no offset means UTC (DTD). Seen in the wild: `+0100`, `+01:00`,
+  missing seconds.
+- **Ids**: the device id is the guide's channel id (`TF1.fr`), escaped by
+  `platformId` (`+`, spaces, `:` → `-<hex>`). Never change that escaping.
+- **The guide address may hold an IPTV password**: log only its host
+  (`sourceLabel`), store only a hash of it.
+- **Cache**: `/data/xmltv-guide.json`, keyed on the address hash and the
+  language; a new followed channel forces a full (non-conditional) download.
+- **Trigger**: fired from the minute tick for starts in `(lastTick, now]`, so
+  never for what started before the integration; deduplicated per channel,
+  start, moment and keyword. Scene filters only do equality: the keyword
+  matching (substring, accents folded) happens in the container, the event
+  carries the keyword as configured.
+- Text states: `fake.lastState()` returns the text itself for a text state.
 
 ---
 
