@@ -1,8 +1,8 @@
 {
-  "name": "gladys-integration-template-js",
+  "name": "gladys-xmltv",
   "version": "1.0.0",
   "private": true,
-  "description": "Official starter template to build an external integration for Gladys Assistant with the JavaScript SDK.",
+  "description": "Gladys Assistant integration: what is on now, next and tonight on your TV channels, from any XMLTV guide.",
   "type": "module",
   "main": "index.js",
   "scripts": {

@@ -1,67 +1,138 @@
-# Template de démonstration
+# Programme TV XMLTV
 
-Ceci est la documentation utilisateur de l'intégration. Gladys ré-héberge ce
-fichier et affiche un lien **Documentation** permanent vers lui dans l'écran
-de configuration (dans la langue de l'utilisateur, avec l'anglais en repli) —
-c'est au moment de configurer que l'utilisateur en a le plus besoin. Gardez
-les courtes indications d'accueil dans les blocs `section` du `config_schema`
-du manifest ; mettez ici le pas-à-pas détaillé (captures d'écran, dépannage…).
+Ce qui passe **maintenant, ensuite et ce soir** sur les chaînes que vous
+suivez, lu dans **n'importe quel guide XMLTV** : un appareil par chaîne, un
+widget pour le tableau de bord, un déclencheur de scène sur des mots-clés
+(« Top 14 », « Koh-Lanta ») et deux actions de scène.
 
-## Ce que vous obtenez
+Testée contre de vrais guides publics (xmltvfr.fr, epgshare01), pas encore sur
+beaucoup d'installations Gladys : vos retours sont bienvenus sur le forum
+Gladys.
 
-Six appareils de démonstration apparaissent après l'installation : une
-station météo (vraies données Open-Meteo), un interrupteur, une lampe
-variable, une prise connectée avec mesure de puissance, un détecteur de
-mouvement et une caméra.
+## Ce qu'il faut
 
-## Configuration
+- Gladys Assistant **5.1.0** ou plus récent.
+- L'adresse d'un guide XMLTV qui couvre vos chaînes, `.xml` ou `.xml.gz` (voir
+  plus bas). Ni compte, ni clé d'API.
 
-1. Ouvrez l'onglet **Configuration** de l'intégration.
-2. Renseignez la **latitude** et la **longitude** que la station météo de
-   démonstration doit observer (Paris par défaut), et choisissez votre unité
-   de température. L'**intervalle de rafraîchissement** règle la fréquence
-   de lecture de la station météo et de la puissance de la prise : toutes
-   les 5 minutes par défaut, toutes les minutes au plus.
-3. Enregistrez : les appareils apparaissent dans l'onglet **Découverte**,
-   prêts à être ajoutés.
+## Trouver un guide
 
-Le réglage **Préférer la connexion locale** pilote la prise de
-démonstration : elle affiche en badge le canal réellement utilisé (local ou
-cloud), avec un point orange quand elle fonctionne en mode dégradé (local
-refusé, bascule cloud).
+- **France, Belgique, Suisse, Afrique francophone** :
+  [xmltvfr.fr](https://xmltvfr.fr) publie des guides gratuits, refaits chaque
+  jour, par exemple `https://xmltvfr.fr/xmltv/xmltv_tnt.xml.gz` (chaînes de la
+  TNT, 1 Mo) ou `https://xmltvfr.fr/xmltv/xmltv.xml.gz` (toutes les chaînes,
+  18 Mo).
+- **Autres pays** : le projet [iptv-org/epg](https://github.com/iptv-org/epg)
+  recense les sources et les outils pour fabriquer un guide ; des sites
+  communautaires publient des guides prêts à l'emploi par pays.
+- **Votre box ou fournisseur IPTV** : beaucoup donnent une adresse XMLTV
+  (souvent `…/xmltv.php?username=…&password=…`). Elle est acceptée telle
+  quelle, et jamais écrite dans les journaux.
+- **Un fichier** : un guide copié dans le volume de données de l'intégration
+  se lit avec une adresse comme `/data/guide.xml.gz`.
 
-## Actions
+## Mise en place
 
-- **Tester le fournisseur météo** — effectue une requête en direct vers
-  Open-Meteo et affiche la température et l'humidité actuelles sous le
-  bouton.
-- **Identifier un appareil** — choisissez un de vos appareils dans la liste
-  et il se signale (la lampe de démonstration « clignote » dans les logs).
+1. Dans **Intégrations → XMLTV TV guide → Configuration**, renseignez
+   l'**adresse du guide**.
+2. Dans **Chaînes suivies**, listez les chaînes, séparées par des virgules, 20
+   au plus : leur **identifiant** dans le guide (`TF1.fr`) ou leur **nom**
+   (`France 2`). Le bouton **Lister les chaînes** (avec une recherche comme
+   `france`) affiche les identifiants et les noms du guide.
+3. Choisissez le **début de soirée** (21 h par défaut) et la fréquence de
+   **téléchargement** du guide (toutes les 12 heures par défaut).
+4. Si vous le souhaitez, saisissez des **mots-clés** pour les scènes et le
+   délai pour **prévenir en avance**.
+5. Appuyez sur **Tester le guide** : il télécharge le guide et dit quelles
+   chaînes suivies il contient, et jusqu'à quand.
+6. Dans l'onglet **Découverte**, ajoutez les chaînes voulues dans Gladys.
 
-## Scènes
+La **langue des textes** règle les noms des fonctionnalités, les textes publiés
+et les sorties des scènes (français par défaut).
 
-L'intégration ajoute ses propres cartes à l'éditeur de scènes (Gladys 5.1
-ou plus récent), dans la catégorie **Intégrations** :
+## L'appareil de chaque chaîne
 
-- **Mouvement détecté** (déclencheur) — lance la scène quand un détecteur
-  de démonstration voit bouger quelque chose. Choisissez éventuellement le
-  détecteur et ce qui a bougé (personne, animal) ; laissés vides, toute
-  détection correspond. Les actions suivantes peuvent lire ce qui a bougé
-  avec `{{triggerEvent.data.target}}`.
-- **Identifier un appareil** (action) — fait se signaler l'appareil choisi.
-  Elle indique si l'appareil a pu se signaler, pour que les actions
-  suivantes puissent en dépendre.
+| Fonctionnalité            | Exemple                         |
+| ------------------------- | ------------------------------- |
+| En ce moment              | `La traversée de Paris`         |
+| Fin du programme en cours | `22:35`                         |
+| Temps restant (minutes)   | `42`                            |
+| Ensuite                   | `22:35 · Les enfants du siècle` |
+| Ce soir                   | `21:10 · La traversée de Paris` |
+
+« Ce soir » est le premier programme d'au moins 20 minutes qui commence à
+partir de 10 minutes avant le début de soirée (la météo et les bandes-annonces
+sont sautées), ou le programme diffusé à cette heure-là. Une fois terminé, il
+affiche celui du lendemain soir, précédé de « demain ». Les heures sont dans le
+fuseau horaire de Gladys.
 
 ## Tableau de bord
 
-Ajoutez le widget **État de la démo** à un tableau de bord : il affiche en
-direct la température de la station météo et la puissance de la prise du
-bureau, la connexion utilisée par la prise (en orange si dégradée) et la
-position observée. Son bouton **Identifier la lampe** fait se signaler la
-lampe de démonstration.
+Le widget **Programme TV** liste jusqu'à 8 chaînes ajoutées à Gladys, sous le
+nom que vous leur avez donné : ce qui passe en ce moment avec le temps restant,
+ou (réglage **Afficher**) ce soir avec l'heure de début. La pastille peut être
+masquée. Un appui sur une chaîne montre maintenant, ensuite et ce soir, avec
+les horaires, l'épisode et la catégorie.
+
+## Scènes
+
+### Déclencheurs
+
+**Programme avec un mot-clé** : un programme dont le titre contient un des
+**mots-clés** configurés commence sur une chaîne suivie (accents et majuscules
+ignorés). Filtres : le mot-clé (tel qu'écrit dans la configuration), la chaîne,
+et le moment — **au début**, ou **avant le début** du délai réglé dans la
+configuration. Variables : mot-clé, chaîne, titre, sous-titre, catégorie,
+début, fin, durée. Un programme déjà commencé au démarrage de l'intégration ne
+déclenche rien.
+
+### Actions
+
+- **Lire le programme d'une chaîne** : maintenant, ensuite ou ce soir sur une
+  chaîne. Sorties : trouvé (1 ou 0), chaîne, titre, sous-titre, catégorie,
+  jour, début, fin, et les minutes avant le début (ou restantes, pour
+  maintenant).
+- **Chercher un programme** : la prochaine diffusion d'un titre (ou d'une
+  partie du titre) sur les chaînes suivies, mêmes sorties.
+
+### Idées de scènes
+
+- À 20 h, dire « Ce soir sur France 2 : {{title}} à {{start}} ».
+- « Top 14 » commence dans 10 minutes : envoyer un message et allumer la télé.
+- Chaque samedi matin, chercher « Koh-Lanta » et annoncer son jour.
+
+## Téléchargements et charge
+
+- Le guide est téléchargé au démarrage, puis toutes les 6, 12 ou 24 heures,
+  par une requête conditionnelle : un guide inchangé n'est pas retéléchargé. Un
+  échec est retenté 30 minutes plus tard, et les programmes déjà connus restent
+  affichés.
+- Le guide est lu en flux, même quand il pèse des centaines de mégaoctets :
+  seules les chaînes suivies sont gardées (100 Mo de mémoire au plus pendant la
+  lecture du guide complet de xmltvfr.fr, moins de 60 Mo au repos).
+- Les programmes des chaînes suivies sont mis en cache dans le volume de
+  données : un redémarrage ne retélécharge pas le guide avant l'heure.
+- Les états sont calculés chaque minute en mémoire, et publiés seulement
+  quand ils changent.
+
+Respectez les conditions du guide utilisé : les guides gratuits sont refaits
+une ou deux fois par jour, les télécharger plus souvent n'apporte rien.
 
 ## Dépannage
 
-L'intégration journalise tout ce qu'elle fait : consultez les logs de
-l'intégration depuis l'interface Gladys (ou `docker logs` sur l'hôte) avec
-`LOG_LEVEL=debug` pour le détail complet.
+- **« L'adresse ne mène pas à un guide XMLTV »** : l'adresse renvoie une page
+  web (connexion, erreur). Ouvrez-la dans un navigateur : elle doit télécharger
+  un fichier `.xml` ou `.xml.gz`.
+- **Une chaîne suivie est « introuvable »** : utilisez **Lister les chaînes**
+  avec une partie de son nom, et copiez son identifiant.
+- **« Aucun programme »** : le guide n'a aucun programme pour cette chaîne à
+  cette heure ; certains guides ne couvrent que quelques jours.
+- **Horaires décalés** : vérifiez le fuseau horaire de Gladys ; les dates du
+  guide portent leur propre décalage.
+
+## Limites
+
+- XMLTV seulement (`.xml` ou gzip `.xml.gz` ; ni `.zip` ni `.xz`).
+- 20 chaînes suivies, programmes gardés jusqu'à 8 jours à l'avance.
+- Ni image, ni résumé, ni enregistrement : c'est un guide, pas un démodulateur
+  (voir l'intégration Enigma2 pour les démodulateurs).
